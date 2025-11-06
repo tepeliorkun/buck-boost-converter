@@ -1,0 +1,26 @@
+*           text=auto
+*.m         text eol=lf
+*.md        text eol=lf
+*.xml       text eol=lf
+*.tex       text eol=lf
+*.csv       text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.sh        text eol=lf
+*.bat       text eol=crlf
+*.ps1       text eol=crlf
+*.mlx       binary
+*.slx       binary
+*.mdl       binary
+*.mat       binary
+*.mex*      binary
+*.fig       binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.pdf       binary
+*.zip       binary
+*.7z        binary
+resources/registry/               -text
+resources/project/aliases.json    -text
