@@ -20,6 +20,7 @@ Vin_boost = linspace(Vin_min, Vout-0.01,30);
 Vripple_pp = 30e-3;
 Cripple_single = 5;  % A_RMS
 Cripple_total  = 2 * Cripple_single;%datasheetx2
+Vin_pp = 20e-3;
 
 [Pout, Pin, Iin] = calc_source_efficiency(Vin, Vout, Iout, eta);
 D = calc_duty_cycle(Vin, Vout,eta);
@@ -52,9 +53,10 @@ IL_max = calc_ILmax(Vout, Iout, Vin_min, eta(1));
 IL_peak = calc_ILpeak(IL_max, Vin_min, Vout, L, fsw);
 Icout_rms = calc_out_cap(Iout, Vout, Vin_boost);
 Cmin = calc_cout_min(Iout, Vout, Vin_min, fsw, Vripple_pp);
-
-
-
+Icin_rms = calc_cin_cap(Iout, D);
+Icin_rms_worst = max(Icin_rms);
+Cin_vec = calc_min_in_cap(D, Iout, Vin_pp, fsw);
+Cin_min = max(Cin_vec);
 
 
 fprintf('\n--- VOUT Feedback Design ---\n');
@@ -80,6 +82,14 @@ fprintf("Safety margin = %.2fx\n", Cripple_total / Icout_rms(1));
 fprintf("\n--- Boost Output Capacitor Minimum C Calculation ---\n");
 fprintf("Target Ripple = %.1f mV p-p\n", Vripple_pp*1e3);
 fprintf("Required Cmin  = %.2f uF\n", Cmin*1e6);
+
+fprintf("CIN RMS at each Vin: %.2f  %.2f  %.2f A\n", Icin_rms);
+fprintf("Worst-case CIN RMS current = %.2f A\n", Icin_rms_worst);
+
+fprintf("\n--- Input Capacitor Minimum C Requirement ---\n");
+fprintf("Target ripple = %.1f mV p-p\n", Vin_pp*1e3);
+fprintf("Required CIN ≥ %.2f uF (worst-case)\n", Cin_min * 1e6);
+
 
 
 figure('Name','Buck-Boost + UVLO Analizleri','Color','w');
